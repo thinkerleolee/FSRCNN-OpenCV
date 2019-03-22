@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28705.295
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FSRCNN-OpenCV", "TensorConv.vcxproj", "{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Debug|x64.ActiveCfg = Debug|x64
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Debug|x64.Build.0 = Debug|x64
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Debug|x86.ActiveCfg = Debug|Win32
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Debug|x86.Build.0 = Debug|Win32
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Release|x64.ActiveCfg = Release|x64
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Release|x64.Build.0 = Release|x64
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Release|x86.ActiveCfg = Release|Win32
+		{EAEE6FD0-9352-4D51-9C3E-7A5813CC7552}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40238F34-8944-4500-88FF-73698E18A08C}
+	EndGlobalSection
+EndGlobal
