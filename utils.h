@@ -52,7 +52,7 @@ namespace fsutils {
 		return res;
 	}
 
-	cv::Mat SR(const cv::Mat& img, FSRCNN_FAST& sr,const int scale) {
+	cv::Mat SR(const cv::Mat& img, FSRCNN_NORMAL& sr,const int scale) {
 		cv::Mat y_img;
 		fsutils::PreprocessImg(img, y_img);
 		tensorconv::Tensor4D im = fsutils::FromMat2Tenser4D(y_img);

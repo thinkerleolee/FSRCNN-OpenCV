@@ -90,8 +90,8 @@ int main(int argc, char** argv)
 		std::cout << "Paramaters Error" << std::endl;
 		return 0;
 	}
-	String path = String(argv[1]);
-	Mat img = imread(path);
+	String path = String("C:\\Users\\think\\Documents\\¸öÈËÎÄµµ\\Design\\FSRCNN-OpenCV\\x64\\Release\\lena10p.bmp");
+	Mat img = imread(argv[1]);
 	if (img.empty())
 	{
 		cout << "fail to load image !" << endl;
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
 
 	int scale = 3;
 
-	FSRCNN_FAST sr(scale);
+	FSRCNN_NORMAL sr(scale);
 
 	time_t ltime1, ltime2, tmp_time;
 	struct TIMEB tstruct1, tstruct2;

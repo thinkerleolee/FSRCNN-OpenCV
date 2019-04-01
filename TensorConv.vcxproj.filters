@@ -24,10 +24,10 @@
     <ClCompile Include="fsrcnn.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="fsrcnn_s_params.cc">
+    <ClCompile Include="utils.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="utils.cc">
+    <ClCompile Include="fsrcnn_params.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="fsrcnn.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="fsrcnn_s_params.h">
+    <ClInclude Include="utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="fsrcnn_params.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

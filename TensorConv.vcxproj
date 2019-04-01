@@ -129,6 +129,8 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>true</OpenMPSupport>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +151,7 @@
       <AdditionalIncludeDirectories>.\third_party\eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,13 +163,13 @@
   <ItemGroup>
     <ClCompile Include="ConvTest.cpp" />
     <ClCompile Include="fsrcnn.cc" />
-    <ClCompile Include="fsrcnn_s_params.cc" />
+    <ClCompile Include="fsrcnn_params.cc" />
     <ClCompile Include="tensorconv_ops.cc" />
     <ClCompile Include="utils.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fsrcnn.h" />
-    <ClInclude Include="fsrcnn_s_params.h" />
+    <ClInclude Include="fsrcnn_params.h" />
     <ClInclude Include="tensorconv_ops.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

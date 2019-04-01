@@ -7,7 +7,7 @@
 
 #include "tensorconv_ops.h"
 
-#include "fsrcnn_s_params.h"
+#include "fsrcnn_params.h"
 
 //Different model layer countsand filter sizes for FSRCNN vs FSRCNN - s(fast)
 //(d, s, m) in paper
@@ -19,6 +19,7 @@ const std::array<int, 3> fsrcnn_s_model_params{ 32,5,1};
 
 class FSRCNN
 {
+public:
 	virtual void LoadModel(int scale = 2) = 0;
 	virtual tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel) = 0;
 };
@@ -59,8 +60,40 @@ public:
 };
 
 class FSRCNN_NORMAL : FSRCNN {
+private:
+	int scale;
+
+	tensorconv::Tensor4DMap feature_extraction_block_feature_extraction_w_;
+	tensorconv::Tensor1DMap feature_extraction_block_feature_extraction_b_;
+
+	tensorconv::Tensor1DMap shrinking_block_alpha1_;
+	tensorconv::Tensor4DMap shrinking_block_shrinking_w_;
+	tensorconv::Tensor1DMap shrinking_block_shrinking_b_;
+
+	tensorconv::Tensor4DMap mapping_block_w3_;
+	tensorconv::Tensor1DMap mapping_block_b3_;
+	tensorconv::Tensor4DMap mapping_block_w4_;
+	tensorconv::Tensor1DMap mapping_block_b4_;
+	tensorconv::Tensor1DMap mapping_block_alpha4_;
+	tensorconv::Tensor4DMap mapping_block_w5_;
+	tensorconv::Tensor1DMap mapping_block_b5_;
+	tensorconv::Tensor1DMap mapping_block_alpha5_;
+	tensorconv::Tensor4DMap mapping_block_w6_;
+	tensorconv::Tensor1DMap mapping_block_b6_;
+	tensorconv::Tensor1DMap mapping_block_alpha6_;
+	tensorconv::Tensor1DMap mapping_block_alpha7_;
+	tensorconv::Tensor4DMap mapping_block_w7_;
+	tensorconv::Tensor1DMap mapping_block_b7_;
+	tensorconv::Tensor1DMap alpha2_;
+
+	tensorconv::Tensor4DMap expanding_block_w8_;
+	tensorconv::Tensor1DMap expanding_block_b8_;
+	tensorconv::Tensor1DMap expanding_block_alpha8_;
+
+	tensorconv::Tensor4DMap deconvolution_block_deconv_w_;
+	tensorconv::Tensor1DMap deconvolution_block_deconv_b_;
 public:
-	FSRCNN_NORMAL();
+	FSRCNN_NORMAL(int scale);
 	~FSRCNN_NORMAL();
 
 	void LoadModel(int scale = 2);
