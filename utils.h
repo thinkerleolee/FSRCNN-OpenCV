@@ -21,7 +21,7 @@ namespace fsutils {
 	//(1) Get image's Y channel
 	//(2) Padding
 	//(3) Normalize
-	void  PreprocessImg(cv::Mat & src_img, cv::Mat & dest) {
+	void  PreprocessImg(const cv::Mat & src_img, cv::Mat & dest) {
 		cv::Mat img_y_cb_cr;
 		cvtColor(src_img, img_y_cb_cr, cv::COLOR_BGR2YCrCb);
 		std::vector<cv::Mat> img_y_cb_cr_channels(3);
@@ -51,4 +51,61 @@ namespace fsutils {
 		}
 		return res;
 	}
+
+	cv::Mat SR(const cv::Mat& img, FSRCNN_FAST& sr,const int scale) {
+		cv::Mat y_img;
+		fsutils::PreprocessImg(img, y_img);
+		tensorconv::Tensor4D im = fsutils::FromMat2Tenser4D(y_img);
+
+		tensorconv::Tensor4D im2 = sr.SrOp(im);
+
+		cv::Mat f_img = fsutils::FromTensor4D2Mat(im2) * 255;
+		f_img.convertTo(f_img, CV_8U);
+
+		cv::Mat img_y_cb_cr;
+		cvtColor(img, img_y_cb_cr, cv::COLOR_BGR2YCrCb);
+
+		std::vector<cv::Mat> img_y_cb_cr_channels(3);
+		split(img_y_cb_cr, img_y_cb_cr_channels);
+		int w = img.cols;
+		int h = img.rows;
+
+		resize(img_y_cb_cr_channels[1], img_y_cb_cr_channels[1], { w * scale,h * scale }, 0, 0, cv::INTER_CUBIC);
+		resize(img_y_cb_cr_channels[2], img_y_cb_cr_channels[2], { w * scale,h * scale }, 0, 0, cv::INTER_CUBIC);
+
+		std::vector<cv::Mat> mv = { f_img, img_y_cb_cr_channels[1], img_y_cb_cr_channels[2] };
+		cv::Mat dst;
+		merge(mv, dst);
+
+		cvtColor(dst, dst, cv::COLOR_YCrCb2BGR);
+		return dst;
+	}
+
+	void string_replace(std::string& strBig, const std::string& strsrc, const std::string& strdst)
+	{
+		std::string::size_type pos = 0;
+		std::string::size_type srclen = strsrc.size();
+		std::string::size_type dstlen = strdst.size();
+
+		while ((pos = strBig.find(strsrc, pos)) != std::string::npos)
+		{
+			strBig.replace(pos, srclen, strdst);
+			pos += dstlen;
+		}
+	}
+
+	std::string GetPathOrURLShortName(std::string strFullName)
+	{
+		if (strFullName.empty())
+		{
+			return "";
+		}
+
+		string_replace(strFullName, "/", "\\");
+
+		std::string::size_type iPos = strFullName.find_last_of('\\') + 1;
+
+		return strFullName.substr(iPos, strFullName.length() - iPos);
+	}
+
 }

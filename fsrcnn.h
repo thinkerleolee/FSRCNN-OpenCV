@@ -19,7 +19,15 @@ const std::array<int, 3> fsrcnn_s_model_params{ 32,5,1};
 
 class FSRCNN
 {
+	virtual void LoadModel(int scale = 2) = 0;
+	virtual tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel) = 0;
+};
+
+class FSRCNN_FAST: FSRCNN
+{
 private:
+	int scale;
+
 	tensorconv::Tensor4DMap feature_extraction_block_feature_extraction_w_;
 	tensorconv::Tensor1DMap feature_extraction_block_feature_extraction_b_;
 
@@ -43,9 +51,18 @@ private:
 
 
 public:
-	FSRCNN();
-	~FSRCNN();
+	FSRCNN_FAST(int scale);
+	~FSRCNN_FAST();
 
-	void LoadModel(bool fast = true);
+	void LoadModel(int scale = 2);
+	tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel);
+};
+
+class FSRCNN_NORMAL : FSRCNN {
+public:
+	FSRCNN_NORMAL();
+	~FSRCNN_NORMAL();
+
+	void LoadModel(int scale = 2);
 	tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel);
 };

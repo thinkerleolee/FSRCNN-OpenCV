@@ -35,10 +35,9 @@ namespace tensorconv {
 
 		Tensor4D output = Tensor4D(output_shape[0], output_shape[1], output_shape[2], output_shape[3]);
 		output.setZero();
-
 		for (int f_b = 0; f_b < filters_shape[3]; ++f_b) { //遍历所有的filter
 			for (int b = 0; b < batch; ++b) {	//遍历所有的输入
-				for (int p = 0; p < patche; ++p) {	//遍历生成的patch
+				for (int p = 0; p < patche; ++p) {	//遍历生成的patch（这里patch过多，造成性能问题！！！）
 					//确定这个patch所对应的行列索引,这里是Row-Major有效
 					int output_row_index = p / output_shape[2];
 					int output_col_index = p % output_shape[2];
