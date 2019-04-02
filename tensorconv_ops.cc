@@ -27,28 +27,77 @@ namespace tensorconv {
 			strides[1], strides[2], //row_stride, col_stride
 			1, 1, //in_row_stride, in_col_stride
 			pad_t);//padding_type
-		int batch = patches.dimension(0);
-		int patche = patches.dimension(1);
-		int patche_h = patches.dimension(2);
-		int patche_w = patches.dimension(3);
-		int channel = patches.dimension(4);
+		register int batch = patches.dimension(0);
+		register int patche = patches.dimension(1);
+		register int patche_h = patches.dimension(2);
+		register int patche_w = patches.dimension(3);
+		register int channel = patches.dimension(4);
 
 		Tensor4D output = Tensor4D(output_shape[0], output_shape[1], output_shape[2], output_shape[3]);
 		output.setZero();
-		for (int f_b = 0; f_b < filters_shape[3]; ++f_b) { //遍历所有的filter
-			for (int b = 0; b < batch; ++b) {	//遍历所有的输入
-				for (int p = 0; p < patche; ++p) {	//遍历生成的patch（这里patch过多，造成性能问题！！！）
-					//确定这个patch所对应的行列索引,这里是Row-Major有效
-					int output_row_index = p / output_shape[2];
-					int output_col_index = p % output_shape[2];
-					for (int h = 0; h < patche_h; ++h) {
-						for (int w = 0; w < patche_w; ++w) {
-							for (int c = 0; c < channel; ++c) {
-								output(b, output_row_index, output_col_index, f_b)
-									+= patches(b, p, h, w, c) * filters(h, w, c, f_b);
+		register int f_b;
+		register int b;
+
+		const int CPU_NUM = 8;
+		std::mutex output_lock;
+		std::array<std::thread*, CPU_NUM> threads;
+		int thread_id;
+		for (f_b = 0; f_b < filters_shape[3]; ++f_b) { //遍历所有的filter
+			for (b = 0; b < batch; ++b) {	//遍历所有的输入
+				int gap = patche / CPU_NUM;
+				if (patche > CPU_NUM) {
+					for (thread_id = 0; thread_id < CPU_NUM; ++thread_id) {
+						register int begin = thread_id * gap;
+						register int end = (thread_id + 1) * gap;
+						if (thread_id == (CPU_NUM - 1)) {
+							end = patche;
+						}
+						threads[thread_id] = new std::thread([begin, end, &patche_h , &patche_w , &channel , &f_b , &b, &output , &output_shape, &patches, &filters]() {
+							register int p;
+							register int h;
+							register int w;
+							register int c;
+							for (p = begin; p < end; ++p) {	//遍历生成的patch（这里patch过多，造成性能问题！！！）
+								//确定这个patch所对应的行列索引,这里是Row-Major有效
+								int output_row_index = p / output_shape[2];
+								int output_col_index = p % output_shape[2];
+								for (h = 0; h < patche_h; ++h) {
+									for (w = 0; w < patche_w; ++w) {
+										for (c = 0; c < channel; ++c) {
+											output(b, output_row_index, output_col_index, f_b)
+													+= patches(b, p, h, w, c) * filters(h, w, c, f_b);
+										}
+									}
+								}
+							}
+							});
+					}
+					for (thread_id = 0; thread_id < CPU_NUM; ++thread_id) {
+						threads[thread_id]->join();
+					}
+					for (thread_id = 0; thread_id < CPU_NUM; ++thread_id) {
+						delete threads[thread_id];
+					}
+				}
+				else {
+					register int p;
+					register int h;
+					register int w;
+					register int c;
+					for (p = 0; p < patche; ++p) {	//遍历生成的patch（这里patch过多，造成性能问题！！！）
+						//确定这个patch所对应的行列索引,这里是Row-Major有效
+						int output_row_index = p / output_shape[2];
+						int output_col_index = p % output_shape[2];
+						for (h = 0; h < patche_h; ++h) {
+							for (w = 0; w < patche_w; ++w) {
+								for (c = 0; c < channel; ++c) {
+									output(b, output_row_index, output_col_index, f_b)
+										+= patches(b, p, h, w, c) * filters(h, w, c, f_b);
+								}
 							}
 						}
 					}
+
 				}
 			}
 		}
