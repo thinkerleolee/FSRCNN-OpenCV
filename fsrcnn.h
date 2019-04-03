@@ -2,11 +2,7 @@
 
 #include <array>
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/dnn.hpp>
-
 #include "tensorconv_ops.h"
-
 #include "fsrcnn_params.h"
 
 //Different model layer countsand filter sizes for FSRCNN vs FSRCNN - s(fast)
@@ -14,17 +10,17 @@
 //D:Feature_extration Filters
 //S:Shrinking-layer Filters
 //M:Mapping Layers
-const std::array<int, 3> fsrcnn_model_params{ 56,12,4 }                                                                                                                                                                                                                                               ;
-const std::array<int, 3> fsrcnn_s_model_params{ 32,5,1};
 
 class FSRCNN
 {
 public:
-	virtual void LoadModel(int scale = 2) = 0;
+	FSRCNN() {};
+	~FSRCNN() {};
+
 	virtual tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel) = 0;
 };
 
-class FSRCNN_FAST: FSRCNN
+class FSRCNN_FAST:public FSRCNN
 {
 private:
 	int scale;
@@ -55,11 +51,10 @@ public:
 	FSRCNN_FAST(int scale);
 	~FSRCNN_FAST();
 
-	void LoadModel(int scale = 2);
 	tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel);
 };
 
-class FSRCNN_NORMAL : FSRCNN {
+class FSRCNN_NORMAL :public  FSRCNN {
 private:
 	int scale;
 
@@ -96,6 +91,5 @@ public:
 	FSRCNN_NORMAL(int scale);
 	~FSRCNN_NORMAL();
 
-	void LoadModel(int scale = 2);
 	tensorconv::Tensor4D SrOp(tensorconv::Tensor4D y_channel);
 };

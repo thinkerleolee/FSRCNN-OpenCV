@@ -28,16 +28,13 @@ FSRCNN_FAST::~FSRCNN_FAST()
 {
 }
 
-void FSRCNN_FAST::LoadModel(int scale)
-{
-}
-
 tensorconv::Tensor4D FSRCNN_FAST::SrOp(tensorconv::Tensor4D input)
 {
 	// Create the Eigen ThreadPoolDevice.
 	Eigen::ThreadPool* tp = new Eigen::ThreadPool(8);
 	Eigen::ThreadPoolDevice my_device(tp, 8);
 
+	//FSRCNN_FAST MODEL
 	tensorconv::Tensor4D output = tensorconv::Conv2D(input, feature_extraction_block_feature_extraction_w_, tensorconv::VALID, { 1,1,1,1 }, my_device);
 	output = tensorconv::BiasAdd(output, feature_extraction_block_feature_extraction_b_);
 
@@ -104,16 +101,13 @@ FSRCNN_NORMAL::~FSRCNN_NORMAL()
 {
 }
 
-void FSRCNN_NORMAL::LoadModel(int scale)
-{
-}
-
 tensorconv::Tensor4D FSRCNN_NORMAL::SrOp(tensorconv::Tensor4D input)
 {
 	// Create the Eigen ThreadPoolDevice.
 	Eigen::ThreadPool* tp = new Eigen::ThreadPool(8);
 	Eigen::ThreadPoolDevice my_device(tp, 8);
 
+	//FSRCNN_NORMAL MODEL
 	tensorconv::Tensor4D output = tensorconv::Conv2D(input, feature_extraction_block_feature_extraction_w_, tensorconv::VALID, { 1,1,1,1 }, my_device);
 	output = tensorconv::BiasAdd(output, feature_extraction_block_feature_extraction_b_);
 

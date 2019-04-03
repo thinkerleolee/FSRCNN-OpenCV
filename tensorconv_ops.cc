@@ -39,9 +39,8 @@ namespace tensorconv {
 		register int b;
 
 		const int CPU_NUM = 8;
-		std::mutex output_lock;
 		std::array<std::thread*, CPU_NUM> threads;
-		int thread_id;
+		register int thread_id;
 		for (f_b = 0; f_b < filters_shape[3]; ++f_b) { //遍历所有的filter
 			for (b = 0; b < batch; ++b) {	//遍历所有的输入
 				int gap = patche / CPU_NUM;

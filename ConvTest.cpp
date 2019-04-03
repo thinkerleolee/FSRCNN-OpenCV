@@ -3,22 +3,18 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <array>
-#include <ctime>
+#include <numeric>
+#include <chrono>
 #include "fsrcnn.h"
 #include "utils.h"
-
-#include <sys/timeb.h>
 
 #if defined(WIN32)
 #include <io.h>
 #include <direct.h>
-# define  TIMEB    _timeb
-# define  ftime    _ftime
 #else
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#define TIMEB timeb
 #endif
 
 using namespace cv;
@@ -90,8 +86,10 @@ int main(int argc, char** argv)
 		std::cout << "Paramaters Error" << std::endl;
 		return 0;
 	}
-	String path = String("C:\\Users\\think\\Documents\\个人文档\\Design\\FSRCNN-OpenCV\\x64\\Release\\lena10p.bmp");
-	Mat img = imread(argv[1]);
+	//String path = String("C:\\Users\\think\\Documents\\个人文档\\Design\\FSRCNN-OpenCV\\x64\\Release\\lena10p.bmp");
+	String path = String(argv[1]);
+
+	Mat img = imread(path);
 	if (img.empty())
 	{
 		cout << "fail to load image !" << endl;
@@ -102,20 +100,14 @@ int main(int argc, char** argv)
 
 	FSRCNN_NORMAL sr(scale);
 
-	time_t ltime1, ltime2, tmp_time;
-	struct TIMEB tstruct1, tstruct2;
-
-	_ftime64_s(&tstruct1);            // start time ms
-	time(&ltime1);               // start time s
+	auto t1 = std::chrono::system_clock::now();
 
 	Mat res = fsutils::SR(img, sr, scale);
 
-	time(&ltime2);               // end time sec
-	_ftime64_s(&tstruct2);            // end time ms
-
-	tmp_time = (ltime2 * 1000 + tstruct2.millitm) - (ltime1 * 1000 + tstruct1.millitm);
+	auto t2 = std::chrono::system_clock::now();
 	cout << path << endl;
-	cout << "处理时间: " << tmp_time << "ms" << endl;
+	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+	cout << "处理时间: " << diff.count() << "ms" << endl;
 	if (_access("result", 0) == -1) {
 #if defined(WIN32)
 		_mkdir("result");
@@ -136,6 +128,6 @@ int main(int argc, char** argv)
 	imwrite("result\\res_bicubic_" + fsutils::GetPathOrURLShortName(path), bicubic);
 	std::cout << "Save as " << ".\result\\res_bicubic_" + fsutils::GetPathOrURLShortName(path) << std::endl;
 
-
-	waitKey(0);
+	std::cout << "Press any key to continue..." << std::endl;
+	getchar();
 }
