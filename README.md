@@ -16,7 +16,7 @@ Based on this [paper](http://mmlab.ie.cuhk.edu.hk/projects/FSRCNN.html).
 ```bash
 Usage: FSRCNN-OpenCV.exe <option(s)> SOURCE-IMG
 Options:
-        -f,--fast True/Flase    Use FSRCNN-s OR FSRCNN
+        -f,--fast True/False    Use FSRCNN-s or FSRCNN
         -s,--scale 2/3  Specify the scale num
 ```
 ## Result
