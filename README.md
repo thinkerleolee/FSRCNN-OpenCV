@@ -21,15 +21,15 @@ Options:
 ```
 ## Result
 
-**Original Lenna image:**
+**Original Comic image:**
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/comic.bmp)
 
-**Bicubic Lenna image X3:**
+**Bicubic Comic image X3:**
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/res_bicubic_comic.bmp)
 
-**FSRCNN Lenna image X3:**
+**FSRCNN Comic image X3:**
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/res_fsrcnn_comic.bmp)
 
