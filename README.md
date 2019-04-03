@@ -25,11 +25,11 @@ Options:
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/comic.bmp)
 
-**FSRCNN Lenna image X3:**
+**Bicubic Lenna image X3:**
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/res_bicubic_comic.bmp)
 
-**Bicubic Lenna image X3:**
+**FSRCNN Lenna image X3:**
 
 ![](https://raw.githubusercontent.com/thinkerleolee/FSRCNN-OpenCV/master/result/res_fsrcnn_comic.bmp)
 
