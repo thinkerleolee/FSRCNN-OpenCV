@@ -1,7 +1,7 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
-#include "tensorconv_ops.h"
+#include <tensorconv_ops.h>
 #include <vector>
 
 #define DEBUG

@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "tensorconv_ops.h"
+#include <tensorconv_ops.h>
 #include "fsrcnn_params.h"
 
 //Different model layer countsand filter sizes for FSRCNN vs FSRCNN - s(fast)
