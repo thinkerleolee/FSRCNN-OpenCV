@@ -84,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\opencv\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\opencv\build\x64\vc15\staticlib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,7 +159,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opencv_world345.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ittnotify.lib;opencv_calib3d345.lib;opencv_imgcodecs345.lib;opencv_stitching345.lib;quirc.lib;libjasper.lib;opencv_core345.lib;opencv_imgproc345.lib;opencv_superres345.lib;zlib.lib;libjpeg-turbo.lib;opencv_dnn345.lib;opencv_ml345.lib;opencv_ts345.lib;libpng.lib;opencv_features2d345.lib;opencv_objdetect345.lib;opencv_video345.lib;libprotobuf.lib;opencv_flann345.lib;opencv_photo345.lib;opencv_videoio345.lib;libtiff.lib;opencv_highgui345.lib;opencv_shape345.lib;opencv_videostab345.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
